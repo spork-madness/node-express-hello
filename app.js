@@ -22,6 +22,20 @@ app.get("/hello", async(req, res) => {
 	}  
 })
 
+app.get("/environment", async(req, res) => {
+	try {
+		var env = process.env;
+		var results = "ENV\n";
+		Object.keys(env).forEach(function(key) {
+			results = results + key + ":" + env[key] + "\n";
+			console.log(key + ":" + env[key]);
+		});
+		res.end(results);	
+		
+	} catch (err) {
+		console.error(err.message);
+	}  
+})
 
 app.listen(PORT, function () {
   console.log('my Node app listening on PORT ' + PORT + '!');

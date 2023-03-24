@@ -16,7 +16,7 @@ app.get("/", async(req,res,next) => {
 
 app.get("/hello", async(req, res) => {
 	try {
-		res.end(`Node Hello on ${os.hostname()}:${PORT} - ${cnt++} \n`);
+		res.end(`Node Howdy on ${os.hostname()}:${PORT} - ${cnt++} \n`);
 	} catch (err) {
 		console.error(err.message);
 	}  

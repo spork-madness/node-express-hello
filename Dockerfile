@@ -11,7 +11,7 @@ RUN \
   fi
 
 # Copy the dependencies into a Slim Node docker image
-FROM quay.io/redhat-user-workloads/arewm-tenant/build-nudge-example/common-nodejs-parent@sha256:51a08880fcc9895fdfe91385fc07bf0d10ee64209694f8c5f81c194d6ceb564d
+FROM quay.io/redhat-user-workloads/arewm-tenant/build-nudge-example/common-nodejs-parent@sha256:324a808086f89c856c5a0a93fc8e3153152ffad85ddd9ea3e7e705a7cd87fc1c
 
 # Install app dependencies
 COPY --from=0 /opt/app-root/src/node_modules /opt/app-root/src/node_modules

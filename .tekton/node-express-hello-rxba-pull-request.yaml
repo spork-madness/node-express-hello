@@ -38,7 +38,7 @@ spec:
       - name: IMAGE_URL
         value: $(tasks.build-container.results.IMAGE_URL)
       taskRef:
-        bundle: quay.io/redhat-appstudio-tekton-catalog/task-show-sbom:0.1@sha256:7db0af43dcebaeb33e34413148370e17078c30fd2fc78fb84c8941b444199f36
+        bundle: quay.io/redhat-appstudio-tekton-catalog/task-show-sbom:0.1@sha256:8062d5b13b5236030407cbd620a75cb7c091f43be178eeefea58d2e3dddcaa74
         name: show-sbom
     - name: show-summary
       params:
@@ -51,7 +51,7 @@ spec:
       - name: build-task-status
         value: $(tasks.build-container.status)
       taskRef:
-        bundle: quay.io/redhat-appstudio-tekton-catalog/task-summary:0.1@sha256:243b13105967b251c1facd55159165809a9fa797215af613997ac6a16798db73
+        bundle: quay.io/redhat-appstudio-tekton-catalog/task-summary:0.2@sha256:716d50d6f79c119e729a41ddf4eca7ddc521dbfb32cc10c7e1ef1942da887e26
         name: summary
     params:
     - description: Source Repository URL
@@ -136,7 +136,7 @@ spec:
       - name: pipelinerun-uid
         value: $(context.pipelineRun.uid)
       taskRef:
-        bundle: quay.io/redhat-appstudio-tekton-catalog/task-init:0.1@sha256:26586a7ef08c3e86dfdaf0a5cc38dd3d70c4c02db1331b469caaed0a0f5b3d86
+        bundle: quay.io/redhat-appstudio-tekton-catalog/task-init:0.2@sha256:6d307bd02891fea47e5b4e1a3adfaa1c9cc9760acb92c6c3be5d15992cd1fc09
         name: init
     - name: clone-repository
       params:
@@ -147,7 +147,7 @@ spec:
       runAfter:
       - init
       taskRef:
-        bundle: quay.io/redhat-appstudio-tekton-catalog/task-git-clone:0.1@sha256:d9e1ab10d72953e7a85dab69b8b96f5b41580a6d4026f77b6a5ba6f3ed227cc3
+        bundle: quay.io/redhat-appstudio-tekton-catalog/task-git-clone:0.1@sha256:5fde5a663e2cd7fddb767d3a72c818adc5df5645af255c881ee41281bdc56a7a
         name: git-clone
       when:
       - input: $(tasks.init.results.build)
@@ -166,7 +166,7 @@ spec:
       runAfter:
       - clone-repository
       taskRef:
-        bundle: quay.io/redhat-appstudio-tekton-catalog/task-prefetch-dependencies:0.1@sha256:ca366af4f096e94dad40a327a09328a5e4bed4d0292a213165861e9e19bf380e
+        bundle: quay.io/redhat-appstudio-tekton-catalog/task-prefetch-dependencies:0.2@sha256:79abdddffcca0fb71374ab6118e07cc55468252bed6f38b1ae6d81eac3ef71e0
         name: prefetch-dependencies
       when:
       - input: $(params.hermetic)
@@ -195,7 +195,7 @@ spec:
       runAfter:
       - prefetch-dependencies
       taskRef:
-        bundle: quay.io/redhat-appstudio-tekton-catalog/task-buildah:0.1@sha256:6e20ce8b188b5a017892fc657364b93abda3fa2c54effe2074168906fba07745
+        bundle: quay.io/redhat-appstudio-tekton-catalog/task-buildah:0.4@sha256:ff0168b2ce443e4c70eff3973508447b4bd590e125e4cf39db330f20cbd4d502
         name: buildah
       when:
       - input: $(tasks.init.results.build)
@@ -216,7 +216,7 @@ spec:
       runAfter:
       - build-container
       taskRef:
-        bundle: quay.io/redhat-appstudio-tekton-catalog/task-inspect-image:0.1@sha256:3a5d3f611240eb5b7b12799c2be22a71803df80dbc12cce2e1e2a252ab543423
+        bundle: quay.io/redhat-appstudio-tekton-catalog/task-inspect-image:0.2@sha256:f8a07d677a803f2063c32c47158b44419fffb87ae55a79cf1ab8cb48d7163fc7
         name: inspect-image
       when:
       - input: $(params.skip-checks)
@@ -262,7 +262,7 @@ spec:
       - name: BASE_IMAGES_DIGESTS
         value: $(tasks.build-container.results.BASE_IMAGES_DIGESTS)
       taskRef:
-        bundle: quay.io/redhat-appstudio-tekton-catalog/task-deprecated-image-check:0.3@sha256:f23d0cca3c02a78fb2b2760d0fba28a3196fa7bcc106da35f45ef95d1f8e7065
+        bundle: quay.io/redhat-appstudio-tekton-catalog/task-deprecated-image-check:0.5@sha256:fd2e0028f897479b6fd7000913da79f7590fb63351d94e15bc3bfe6028a0ede0
         name: deprecated-image-check
       when:
       - input: $(params.skip-checks)
@@ -283,7 +283,7 @@ spec:
       runAfter:
       - build-container
       taskRef:
-        bundle: quay.io/redhat-appstudio-tekton-catalog/task-clair-scan:0.1@sha256:f6a5a24cb8faa590d4f3adc204a197fd89da1bcea365963af9ac66838c030816
+        bundle: quay.io/redhat-appstudio-tekton-catalog/task-clair-scan:0.2@sha256:365c751acdc07f7f1eca000606f756b4dde936ba1d80fc741e9d380b3fafa1ff
         name: clair-scan
       when:
       - input: $(params.skip-checks)
@@ -297,7 +297,7 @@ spec:
       runAfter:
       - clone-repository
       taskRef:
-        bundle: quay.io/redhat-appstudio-tekton-catalog/task-sast-snyk-check:0.1@sha256:f57c69cfedf37a46dd61285b5b9b4805ff196facaad2d7cdeded496c77d31bec
+        bundle: quay.io/redhat-appstudio-tekton-catalog/task-sast-snyk-check:0.3@sha256:cda4379548950fc9ab043dea6cd495951c77a4f661d388cf1a41b2c577ef37a2
         name: sast-snyk-check
       when:
       - input: $(params.skip-checks)
@@ -322,7 +322,7 @@ spec:
       runAfter:
       - build-container
       taskRef:
-        bundle: quay.io/redhat-appstudio-tekton-catalog/task-clamav-scan:0.1@sha256:b7d194547892219c663c4414d3bbb18e0c1798353e3922e4dc2b63ef9169adb9
+        bundle: quay.io/redhat-appstudio-tekton-catalog/task-clamav-scan:0.2@sha256:44bc0af61857c4787866911762df62584531f2d3d4fc849d4d6d2e781dd68cee
         name: clamav-scan
       when:
       - input: $(params.skip-checks)
@@ -338,7 +338,7 @@ spec:
       runAfter:
       - build-container
       taskRef:
-        bundle: quay.io/redhat-appstudio-tekton-catalog/task-sbom-json-check:0.1@sha256:0ca48e1dffde39efe97b3252386f529241d6b276fe812a88774a9f37fc45f742
+        bundle: quay.io/redhat-appstudio-tekton-catalog/task-sbom-json-check:0.2@sha256:8629da21a2f36c45020863270f63b85f42c8701c9922726fdd57c70dbfafd44d
         name: sbom-json-check
       when:
       - input: $(params.skip-checks)

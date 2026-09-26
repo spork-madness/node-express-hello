@@ -163,7 +163,7 @@ spec:
       runAfter:
       - clone-repository
       taskRef:
-        bundle: quay.io/redhat-appstudio-tekton-catalog/task-prefetch-dependencies:0.1@sha256:ca366af4f096e94dad40a327a09328a5e4bed4d0292a213165861e9e19bf380e
+        bundle: quay.io/redhat-appstudio-tekton-catalog/task-prefetch-dependencies:0.1@sha256:7142f299621fcb02a8eb01dc4ddd93230143847f59038ba8f973cb07f69db367
         name: prefetch-dependencies
       when:
       - input: $(params.hermetic)

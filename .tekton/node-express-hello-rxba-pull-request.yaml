@@ -297,7 +297,7 @@ spec:
       runAfter:
       - clone-repository
       taskRef:
-        bundle: quay.io/redhat-appstudio-tekton-catalog/task-sast-snyk-check:0.1@sha256:f57c69cfedf37a46dd61285b5b9b4805ff196facaad2d7cdeded496c77d31bec
+        bundle: quay.io/redhat-appstudio-tekton-catalog/task-sast-snyk-check:0.1@sha256:41eaa34c413a924e504033756a8a06454f45791cdbb8b8a5803c4475df5e5962
         name: sast-snyk-check
       when:
       - input: $(params.skip-checks)
